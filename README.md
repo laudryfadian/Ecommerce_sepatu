@@ -1,6 +1,6 @@
 # bakul_sepatu
 
-A new Flutter project.
+Project untuk proyek 2 membuat aplikasi ecommerce sepatu bagian frontend android
 
 ## Getting Started
 
