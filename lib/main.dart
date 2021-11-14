@@ -1,8 +1,10 @@
 import 'package:bakul_sepatu/auth/login.dart';
+import 'package:bakul_sepatu/network/network.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
   runApp(MyApp());
+  Api.getAuth('produk');
 }
 
 class MyApp extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'package:bakul_sepatu/auth/login.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatelessWidget {
@@ -104,6 +103,7 @@ class Register extends StatelessWidget {
                 child: TextField(
                     style: TextStyle(color: Colors.white),
                     autocorrect: true,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         hintText: "Masukkan nomor handphone",
                         prefixIcon: Icon(
@@ -190,10 +190,7 @@ class Register extends StatelessWidget {
                   Container(
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Login()),
-                        );
+                        Navigator.pop(context);
                       },
                       child: Text(
                         "Login",

@@ -1,4 +1,5 @@
 import 'package:bakul_sepatu/auth/register.dart';
+import 'package:bakul_sepatu/nav.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -100,7 +101,12 @@ class Login extends StatelessWidget {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.blueAccent)))),
-                onPressed: () => null),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Nav()),
+                  );
+                }),
           ),
           Container(
             margin: EdgeInsets.only(top: 20.0),
