@@ -8,12 +8,10 @@ class Keranjang extends StatefulWidget {
 class _KeranjangState extends State<Keranjang> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Keranjang'),
-        centerTitle: true,
+    return Container(
+      child: Center(
+        child: Text('oke'),
       ),
-      backgroundColor: Colors.greenAccent,
     );
   }
 }
