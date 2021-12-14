@@ -1,8 +1,40 @@
+import 'dart:convert';
+
 import 'package:bakul_sepatu/auth/register.dart';
 import 'package:bakul_sepatu/nav.dart';
+import 'package:bakul_sepatu/network/link.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    checkLogin();
+  }
+
+  void checkLogin() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? val = pref.getString("login");
+    if (val != null) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Nav()),
+        (Route<dynamic> route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +63,7 @@ class Login extends StatelessWidget {
               padding: EdgeInsets.only(left: 30.0, right: 30.0),
               margin: EdgeInsets.only(top: 10.0),
               child: TextField(
+                  controller: emailController,
                   style: TextStyle(color: Colors.white),
                   autocorrect: true,
                   decoration: InputDecoration(
@@ -64,6 +97,7 @@ class Login extends StatelessWidget {
               padding: EdgeInsets.only(left: 30.0, right: 30.0),
               margin: EdgeInsets.only(top: 10.0),
               child: TextField(
+                  controller: passwordController,
                   style: TextStyle(color: Colors.white),
                   autocorrect: false,
                   obscureText: true,
@@ -102,10 +136,7 @@ class Login extends StatelessWidget {
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.blueAccent)))),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Nav()),
-                  );
+                  login();
                 }),
           ),
           Container(
@@ -141,4 +172,58 @@ class Login extends StatelessWidget {
       ),
     );
   }
+
+  void login() async {
+    try {
+      if (emailController.text.isNotEmpty &&
+          passwordController.text.isNotEmpty) {
+        var response = await http.post(
+            Uri.parse(BaseAuth.domain + 'auth/user/login'),
+            headers: <String, String>{'authorization': BaseAuth.basicAuth},
+            body: ({
+              "email": emailController.text,
+              "password": passwordController.text
+            }));
+        final body = jsonDecode(response.body);
+        final bodyy = jsonDecode(response.body)['data'];
+        print(body);
+        if (response.statusCode == 200) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(body['message'])));
+
+          getId(bodyy['_id']);
+          // getNama(bodyy['nama']);
+          // getEmail(bodyy['email']);
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(body['message'])));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Email & Password masih kosong")));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getId(String id) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("login", id);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => Nav()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  // void getNama(String nama) async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   await pref.setString("nama", nama);
+  // }
+
+  // void getEmail(String email) async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   await pref.setString("email", email);
+  // }
 }
