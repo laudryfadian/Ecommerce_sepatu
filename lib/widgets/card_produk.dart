@@ -11,7 +11,7 @@ class CardProduk extends StatelessWidget {
       child: Column(
         children: [
           Image.network(
-            'https://s3.bukalapak.com/bukalapak-kontenz-production/content_attachments/67893/w-740/92802586_225540215456856_7684868667231593088_n.jpg',
+            produk.urlGambar,
             height: 180.0,
             fit: BoxFit.fitHeight,
           ),
