@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -6,6 +7,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String nama = "";
+  String email = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getCred();
+  }
+
+  void getCred() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      nama = pref.getString("nama")!;
+      email = pref.getString("email")!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +34,7 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: EdgeInsets.only(top: 20),
               height: 50.0,
               child: Row(
                 children: [
@@ -25,7 +43,7 @@ class _HomeState extends State<Home> {
                     width: 50.0,
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'https://thumb.viva.co.id/media/frontend/thumbs3/2021/09/15/6141b095d7e59-megabintang-manchester-united-cristiano-ronaldo_665_374.jfif'),
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Alesso_profile.png/467px-Alesso_profile.png'),
                     ),
                   ),
                   Container(
@@ -35,12 +53,12 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Hi Udry',
+                          nama,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 25.0),
                         ),
                         Text(
-                          'How are you today?',
+                          'Selamat Datang',
                           style: TextStyle(fontSize: 15.0),
                         )
                       ],
@@ -175,11 +193,11 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 )),
-            Container(
-              height: 300.0,
-              width: double.infinity,
-              color: Colors.red,
-            ),
+            // Container(
+            //   height: 300.0,
+            //   width: double.infinity,
+            //   color: Colors.red,
+            // ),
             SizedBox(
               height: 70,
             )
