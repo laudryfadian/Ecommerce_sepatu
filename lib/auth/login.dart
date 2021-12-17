@@ -192,8 +192,8 @@ class _LoginState extends State<Login> {
               .showSnackBar(SnackBar(content: Text(body['message'])));
 
           getId(bodyy['_id']);
-          // getNama(bodyy['nama']);
-          // getEmail(bodyy['email']);
+          getNama(bodyy['nama']);
+          getEmail(bodyy['email']);
         } else {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(body['message'])));
@@ -217,13 +217,13 @@ class _LoginState extends State<Login> {
     );
   }
 
-  // void getNama(String nama) async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   await pref.setString("nama", nama);
-  // }
+  void getNama(String nama) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("nama", nama);
+  }
 
-  // void getEmail(String email) async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   await pref.setString("email", email);
-  // }
+  void getEmail(String email) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("email", email);
+  }
 }
