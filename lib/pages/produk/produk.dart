@@ -58,17 +58,6 @@ class _ProdukState extends State<Produk> {
               if (snapshot.hasData) {
                 listProduk = snapshot.data!;
                 return Container(
-                  // child: ListView.builder(
-                  //     itemCount: listProduk.length,
-                  //     shrinkWrap: true,
-                  //     itemBuilder: (context, index) {
-                  //       var _data = listProduk[index];
-                  //       return InkWell(
-                  //           onTap: () {},
-                  //           child: CardProduk(
-                  //             produk: _data,
-                  //           ));
-                  //     }),
                   height: double.infinity,
                   child: GridView.count(
                     padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 50.0),
